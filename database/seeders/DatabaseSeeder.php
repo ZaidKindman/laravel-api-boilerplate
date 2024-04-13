@@ -28,10 +28,22 @@ class DatabaseSeeder extends Seeder
             Permission::create(['name' => 'view role']),
         ]);
 
-        User::create([
+        $author_role = Role::create(['name' => 'author']);
+
+        $author_role->syncPermissions([
+            Permission::create(['name' => 'create todo']),
+            Permission::create(['name' => 'edit todo']),
+            Permission::create(['name' => 'delete todo']),
+            Permission::create(['name' => 'view todo']),
+        ]);
+
+        $admin = User::create([
             'name' => 'admin',
             'email' => 'admin@admin.com',
             'password' => bcrypt('admin1234'),
         ]);
+
+        $admin->assignRole($admin_role);
+        $admin->assignRole($author_role);
     }
 }

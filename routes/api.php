@@ -15,9 +15,9 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::prefix('todos')->middleware('auth')->group(function () {
-    Route::post('/', [TodoController::class, 'store']);
-    Route::patch('/changeTodoState', [TodoController::class, 'changeTodoState']);
-    Route::put('/', [TodoController::class, 'update']);
-    Route::get('/', [TodoController::class, 'index']);
-    Route::delete('/', [TodoController::class, 'delete']);
+    Route::post('/', [TodoController::class, 'store'])->middleware('permission:create todo');
+    Route::patch('/changeTodoState', [TodoController::class, 'changeTodoState'])->middleware('permission:edit todo');
+    Route::put('/', [TodoController::class, 'update'])->middleware('permission:edit todo');
+    Route::get('/', [TodoController::class, 'index'])->middleware('permission:view todo');
+    Route::delete('/', [TodoController::class, 'delete'])->middleware('permission:delete todo');
 });
