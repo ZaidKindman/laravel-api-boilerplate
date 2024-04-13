@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Todo;
+namespace App\Http\Controllers\API\Todo;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Todo\ChangeTodoStateRequest;

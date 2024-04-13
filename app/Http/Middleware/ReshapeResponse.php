@@ -24,8 +24,8 @@ class ReshapeResponse
             $reshapedContent = json_encode(['data' => json_decode($content), 'status' => 'success', 'message' => null]);
         else if ($response->getStatusCode() == 404)
             $reshapedContent = json_encode(['data' => null, 'status' => 'not found', 'message' => 'Object Not Found']);
-        else if ($response->getStatusCode() == 500)
-            $reshapedContent = json_encode(['data' => null, 'status' => 'server error', 'message' => null]);
+        /* else if ($response->getStatusCode() == 500)
+            $reshapedContent = json_encode(['data' => null, 'status' => 'server error', 'message' => null]); */
         else if ($response->getStatusCode() == 422) {
             $reshapedContent = json_encode(['data' => json_decode($content)->errors, 'status' => 'bad request', 'message' => json_decode($content)->message]);
             $response->setStatusCode(400);

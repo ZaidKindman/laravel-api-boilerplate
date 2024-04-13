@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Todo\TodoController;
+use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\API\Todo\TodoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
