@@ -15,7 +15,7 @@ class TodoController extends Controller
     public function index()
     {
         $todos = Todo::all();
-        return response()->json(TodoResource::collection($todos));
+        return response()->success(TodoResource::collection($todos));
     }
 
     public function store(StoreTodoRequest $request)
@@ -23,45 +23,41 @@ class TodoController extends Controller
         $todo = $request->validated();
         $todo['user_id'] = auth()->user()->id;
         $inserted_todo = Todo::create($todo);
-        return response()->json(new TodoResource($inserted_todo), 200);
+        return response()->success(new TodoResource($inserted_todo));
     }
 
     public function update(UpdateTodoRequest $request)
     {
         $todo = Todo::find($request->id);
 
-        if ($todo == null) {
-            return response()->json(['error' => 'Todo not found'], 404);
-        }
+        if ($todo == null)
+            return response()->error(null, "Todo not found", 404);
 
         $todo->title = $request->title;
         $todo->body = $request->body;
         $todo->completed = $request->completed;
         $todo->save();
+        return response()->success($todo);
     }
 
     public function changeTodoState(ChangeTodoStateRequest $request)
     {
         $todo = Todo::find($request->id);
 
-        if ($todo == null) {
-            return response()->json(['error' => 'Todo not found'], 404);
-        }
+        if ($todo == null) return response()->error(null, "Todo not found", 404);
 
         $todo->completed = $request->completed;
         $todo->save();
-        return response()->json(new TodoResource($todo), 200);
+        return response()->success(new TodoResource($todo));
     }
 
     public function delete(DeleteTodoRequest $request)
     {
         $todo = Todo::find($request->id);
 
-        if ($todo == null) {
-            return response()->json(['error' => 'Todo not found'], 404);
-        }
+        if ($todo == null) return response()->error(null, "Todo not found", 404);
 
         $todo->delete();
-        return response()->json(null, 200);
+        return response()->success(null);
     }
 }
