@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Enums\System\PermissionsEnum;
+use App\Enums\System\RolesEnum;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,26 +17,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin_role = Role::create(['name' => 'admin']);
+        $admin_role = Role::create(['name' => RolesEnum::ADMIN]);
 
         $admin_role->syncPermissions([
-            Permission::create(['name' => 'create user']),
-            Permission::create(['name' => 'edit user']),
-            Permission::create(['name' => 'delete user']),
-            Permission::create(['name' => 'view user']),
-            Permission::create(['name' => 'create role']),
-            Permission::create(['name' => 'edit role']),
-            Permission::create(['name' => 'delete role']),
-            Permission::create(['name' => 'view role']),
+            Permission::create(['name' => PermissionsEnum::CREATE_USER]),
+            Permission::create(['name' => PermissionsEnum::READ_USER]),
+            Permission::create(['name' => PermissionsEnum::UPDATE_USER]),
+            Permission::create(['name' => PermissionsEnum::DELETE_USER]),
         ]);
 
-        $author_role = Role::create(['name' => 'author']);
+        $author_role = Role::create(['name' => RolesEnum::AUTHOR]);
 
         $author_role->syncPermissions([
-            Permission::create(['name' => 'create todo']),
-            Permission::create(['name' => 'edit todo']),
-            Permission::create(['name' => 'delete todo']),
-            Permission::create(['name' => 'view todo']),
+            Permission::create(['name' => PermissionsEnum::CREATE_TODO]),
+            Permission::create(['name' => PermissionsEnum::READ_TODO]),
+            Permission::create(['name' => PermissionsEnum::UPDATE_TODO]),
+            Permission::create(['name' => PermissionsEnum::DELETE_TODO]),
+            Permission::create(['name' => PermissionsEnum::CHANGE_TODO_STATE]),
         ]);
 
         $admin = User::create([
