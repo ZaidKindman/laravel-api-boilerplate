@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Todo;
 
+use App\Exceptions\Todo\TodoException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Todo\ChangeTodoStateRequest;
 use App\Http\Requests\Todo\DeleteTodoRequest;
@@ -14,15 +15,15 @@ class TodoController extends Controller
 {
     public function index()
     {
-        $todos = Todo::all();
-        return response()->success(TodoResource::collection($todos));
+        return response()->success(TodoResource::collection(Todo::all()));
     }
 
     public function store(StoreTodoRequest $request)
     {
-        $todo = $request->validated();
-        $todo['user_id'] = auth()->user()->id;
-        $inserted_todo = Todo::create($todo);
+        $object = $request->validated();
+        $object['user_id'] = auth()->user()->id;
+        $inserted_todo = Todo::create($object);
+
         return response()->success(new TodoResource($inserted_todo));
     }
 
@@ -31,7 +32,7 @@ class TodoController extends Controller
         $todo = Todo::find($request->id);
 
         if ($todo == null)
-            return response()->error(null, "Todo not found", 404);
+            throw TodoException::TodoNotFoundException();
 
         $todo->title = $request->title;
         $todo->body = $request->body;
@@ -44,7 +45,8 @@ class TodoController extends Controller
     {
         $todo = Todo::find($request->id);
 
-        if ($todo == null) return response()->error(null, "Todo not found", 404);
+        if ($todo == null)
+            throw TodoException::TodoNotFoundException();
 
         $todo->completed = $request->completed;
         $todo->save();
@@ -55,7 +57,8 @@ class TodoController extends Controller
     {
         $todo = Todo::find($request->id);
 
-        if ($todo == null) return response()->error(null, "Todo not found", 404);
+        if ($todo == null)
+            throw TodoException::TodoNotFoundException();
 
         $todo->delete();
         return response()->success(null);
