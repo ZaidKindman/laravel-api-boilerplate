@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Auth;
 
+use App\Exceptions\Auth\AuthException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
@@ -12,21 +13,20 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         $user = User::create($request->validated());
-        if ($user) {
 
-            $token = auth()->login($user);
-            return response()->success($this->respondWithToken($token, $user));
-        } else {
-            return response()->error(null, "server error", 500);
-        }
+        if (!$user)
+            throw AuthException::InternalServerErrorException();
+
+        $token = auth()->login($user);
+        return response()->success($this->respondWithToken($token, $user));
     }
 
     public function login(LoginRequest $request)
     {
         if (!$token = auth()->attempt($request->validated()))
-            return response()->error(null, 'invalid credentials', 401);
-        else
-            return response()->success($this->respondWithToken($token, auth()->user()));
+            throw AuthException::InvalidLoginCredentialsException();
+
+        return response()->success($this->respondWithToken($token, auth()->user()));
     }
 
     public function logout()
