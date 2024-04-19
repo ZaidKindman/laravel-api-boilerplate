@@ -4,7 +4,7 @@ This is a boilerplate for building RESTful APIs with PHP and the Laravel framewo
 
 ## Features
 
--   **Authentication and authorization**: The boilerplate includes support for JWT authentication and authorization using [Spatie](https://spatie.be/docs/laravel-permission/v6/installation-laravel).
+-   **Authentication and authorization**: The boilerplate includes support for JWT authentication and authorization using [Spatie](https://spatie.be/docs/laravel-permission/v6/installation-laravel) and [Laravel JWT Auth](https://laravel-jwt-auth.readthedocs.io/en/latest/).
 -   **Response formatting**: The boilerplate includes support for formatting responses.
 -   **Error handling**: The boilerplate includes a custom error handler that returns JSON API-compliant error responses.
 
