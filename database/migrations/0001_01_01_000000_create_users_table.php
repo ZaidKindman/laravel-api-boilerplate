@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            //this field just to demonstrate file uploading functionality
+            //you can remove it later and use separated table
+            $table->string('profile_image')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
