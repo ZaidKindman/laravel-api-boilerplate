@@ -30,7 +30,7 @@ cd laravel-api-boilerplate
 composer install
 ```
 
-3. Copy the example environment file and customize it as needed
+3. Copy the example environment file and rename it to .env
 
 4. Generate the application key:
 
@@ -38,24 +38,22 @@ composer install
 php artisan key:generate
 ```
 
-5. Run the database migrations:
+5. Create an sqlite database in database folder named: "database.sqlite".
+
+6. Run the database migrations:
 
 ```bash
 php artisan migrate:fresh --seed
 ```
 
-6. Link the storage:
+7. Link the storage:
 
 ```bash
 php artisan storage:link
 ```
 
-7. Start the local development server:
+8. Start the local development server:
 
 ```bash
 php artisan serve
 ```
-
-## License
-
-The Laravel API Boilerplate is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
